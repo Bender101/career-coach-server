@@ -6,4 +6,5 @@ Back-end for "Career coach" project
 
 # Для запуска сервера:
 * Создайте базу данных в PostgreSQL
+* В главной директории создайте файл .env и заполните поля в соответствии с фалом .env_example
 * В главной директории ввыполните команды: npm i -> npx sequelize db:migrate -> npx sequelize db:seed:all -> npm start
