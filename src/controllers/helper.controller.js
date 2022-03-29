@@ -13,7 +13,6 @@ const getOneResult = async (req, res) => {
         salary: response.salary,
         createdAt: response.createdAt,
       };
-      // console.log(answer);
     return res.json(answer)
   } catch (error) {
     return res.sendStatus(500)
@@ -27,7 +26,6 @@ const getUserAllResult = async (req, res) => {
   }
   try {
     const response = await Result.findAll({ where: { user_id: id }, raw: true, include: WebSite  });
-    // console.log('getUserAllResult >>>> >>>>  ', response);
     const answer = response.map((el) => {
       return (
         {
@@ -42,7 +40,6 @@ const getUserAllResult = async (req, res) => {
         }
       )
     });
-      //console.log('answer ======>', answer);
     return res.json(answer)
   } catch (error) {
     return res.sendStatus(500)
@@ -112,8 +109,6 @@ const getAllFromWhiteList = async (req, res) => {
     const { id } = req.params;
     const allItemsFromWhiteList = await WhiteList.findAll({
       where: { user_id: +id },
-      // include: Skills,
-      // order: [["createdAt", "DESC"]],
     });
     return res.json(allItemsFromWhiteList);
   } catch (error) {
@@ -126,8 +121,6 @@ const getAllFromBlackList = async (req, res) => {
     const { id } = req.params;
     const allItemsFromBlackList = await BlackList.findAll({
       where: { user_id: +id },
-      // include: Skills,
-      // order: [["createdAt", "DESC"]],
     });
     return res.json(allItemsFromBlackList);
   } catch (error) {
@@ -138,9 +131,7 @@ const getAllFromBlackList = async (req, res) => {
 const deleteFromWhiteList = async (req, res) => {
   try {
     const { userId } = req.body;
-    console.log(req.body)
     const { id } = req.params;
-    console.log(id)
     await WhiteList.destroy({
       where: { id: +id, user_id: +userId },
     });
@@ -212,19 +203,11 @@ const addSkillMyPlans = async (req, res) => {
 
 const getRecomendation = async (req, res) => {
   const { id } = req.params;
-  // id это result_id
-  // console.log(id);
-  // TODO сделать логику по рекомендациям, использовать текущие скилы пользователя
-
-  // заглушка, пока нет логики для сбора массива
-  // res.json(['React', 'NodeJS', 'TypeScript'])
 }
 
 const getVacanciesUser = async (req, res) => {
   const { id } = req.params;
-  console.log('getVacanciesUser id_user >>> ', id);
   const response = await BestVacancy.findAll({where: {user_id: id}, raw: true})
-  // console.log(response);
   res.json(response)
 }
 

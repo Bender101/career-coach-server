@@ -7,8 +7,6 @@ const scrapHH = async (req, res) => {
   let { userId, title, amount = 1, period = 1, city = 'Россия', salary, websites } = req.body;
   const skillsObj = {};
 
-  console.log('-----======= Scrapping activated =======-----');
-  console.log({ userId, title, amount, period, city, salary });
   period = (period > 30) ? 30 : +period;
 
 
@@ -21,7 +19,6 @@ const scrapHH = async (req, res) => {
 
   const userSkillsArr = [];
   if (userSkills.length > 0) {
-    //console.log('userSkills = ', userSkills[0].Skill.skill);
     for (let i = 0; i < userSkills.length; i++) {
       userSkillsArr.push(userSkills[i].Skill.skill);
     }
@@ -41,7 +38,6 @@ const scrapHH = async (req, res) => {
   };
   const resultId = await scraperController(browserInstance, params);
 
-  console.log('resultId ===== ', resultId);
 
   
   return res.json({resultId});

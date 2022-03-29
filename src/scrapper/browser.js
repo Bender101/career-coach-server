@@ -16,7 +16,6 @@ puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
 async function startBrowser(){
 	let browser;
 	try {
-	    console.log("Opening the browser......");
 	    browser = await puppeteer.launch({
           executablePath: process.env.PATH_TO_BROWSER,
 	        headless: false,
