@@ -19,16 +19,16 @@ const newRate = async (req, res) => {
     }
   );
   const data = await UserSkill.findOne({ where: { user_id, skill_id } });
-  res.json(data);
+ return res.json(data);
 };
 
 //Check user id
 const checkUserId = async (req, res) => {
   try {
     const { id } = req.session.user;
-    res.json(id);
+   return res.json(id);
   } catch (error) {
-    res.send({ message: error });
+   return res.send({ message: error });
   }
 };
 
@@ -36,9 +36,9 @@ const checkUserId = async (req, res) => {
 const allSkillsForSelectSkills = async (req, res) => {
   try {
     const allSkills = await Skills.findAll();
-    res.json(allSkills);
+   return res.json(allSkills);
   } catch (error) {
-    res.sendStatus(418);
+   return res.sendStatus(500).json({error.message});
   }
 };
 
@@ -53,7 +53,7 @@ const allUserSkillsFromSkills = async (req, res) => {
     });
     return res.json(allSkilsForSkills);
   } catch (error) {
-    res.sendStatus(418);
+    return res.sendStatus(500).json({error.message});
   }
 };
 
@@ -68,7 +68,7 @@ const allUserSkillsFromLearn = async (req, res) => {
     });
     return res.json(allSkilsForLearn);
   } catch (error) {
-    res.sendStatus(418);
+    return res.sendStatus(500).json({error.message});
   }
 };
 
@@ -77,7 +77,7 @@ const newUserSkillLearn = async (req, res) => {
   try {
     const { input, id } = req.body.skill;
     if (!input) {
-      return res.sendStatus(418);
+      return res.sendStatus(400).json({message: "Некоректный ввод"});
     }
 
     const checkOrCreateSkill = await Skills.findOrCreate({
@@ -103,7 +103,7 @@ const newUserSkillLearn = async (req, res) => {
       category: "learn",
     });
   } catch (error) {
-    res.sendStatus(418);
+   return res.sendStatus(500).json({error.message});
   }
 };
 
@@ -112,7 +112,7 @@ const newUserSkillSkill = async (req, res) => {
   try {
     const { input, id } = req.body.skill;
     if (!input) {
-      res.sendStatus(418);
+     return res.sendStatus(400).json({message: "Некоректный ввод"});
     } else {
       const checkOrCreateSkill = await Skills.findOrCreate({
         where: { skill: input },
@@ -137,7 +137,7 @@ const newUserSkillSkill = async (req, res) => {
       });
     }
   } catch (error) {
-    res.send(error);
+    return res.sendStatus(500).json({error.message});
   }
 };
 
@@ -149,10 +149,10 @@ const deleteUserSkillFromSkill = async (req, res) => {
       where: { user_id, skill_id },
     });
     if (deleteSkill) {
-      res.status(202).json(skill_id);
+      res.status(200).json(skill_id);
     }
   } catch (error) {
-    res.sendStatus(500);
+    return res.sendStatus(500).json({error.message});
   }
 };
 
@@ -164,10 +164,10 @@ const deleteUserSkillFromLearn = async (req, res) => {
       where: { user_id, skill_id },
     });
     if (deleteLearn) {
-      res.status(202).json(skill_id);
+      res.status(200).json(skill_id);
     }
   } catch (error) {
-    res.sendStatus(500);
+    return res.sendStatus(500).json({error.message});
   }
 };
 
